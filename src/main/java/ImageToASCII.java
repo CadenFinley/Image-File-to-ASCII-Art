@@ -2,7 +2,6 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 /**
@@ -10,33 +9,34 @@ import javax.imageio.ImageIO;
  */
 public class ImageToASCII {
 
-    private BufferedImage image;
-    private int width;
-    private int height;
+	private BufferedImage image;
+	private int width;
+	private int height;
+	private String imagePath;
 
-    private void loadImage(String path) {
-        try {
-            image = null;
-            File inputImage = new File(path);
-            image = ImageIO.read(inputImage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public ImageToASCII(String pathToImage, int width, int height) {
+		image = null;
+		this.width = width;
+		this.height = height;
+		this.imagePath = pathToImage;
+		try {
+			loadImage(imagePath);
+		} catch (IOException e) {
+			System.out.println("Error loading image");
+		}
+	}
 
-    private void setWidth() {
+	private void loadImage(String path) throws IOException {
+		File inputImage = new File(path);
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		image = ImageIO.read(inputImage);
+	}
 
-    }
+	public int getWidth() {
+		return image.getWidth();
+	}
 
-    private void setHeight() {
-
-    }
-
-    public int getWidth() {
-        return image.getWidth();
-    }
-
-    public int getHeight() {
-        return image.getHeight();
-    }
+	public int getHeight() {
+		return image.getHeight();
+	}
 }
