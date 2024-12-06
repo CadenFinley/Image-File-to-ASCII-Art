@@ -39,26 +39,18 @@ public class ImageToASCII {
 		this.width = image.getWidth();
 	}
 
-	private char pixelToASCII(int pixel) {
-		final char[] asciiChars = { '@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.' };
-		Color color = new Color(pixel, true);
-		int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
-		int index = (gray * (asciiChars.length - 1)) / 255;
-		return asciiChars[index];
+	private boolean validateResolutions() {
+		if (image.getHeight() == 0 || image.getWidth() == 0) {
+			System.out.println("Image dimensions are 0");
+			return false;
+		}
+		if (image.getHeight() > 1080 || image.getWidth() > 1920) {
+			System.out.println("Image dimensions are too large");
+			return false;
+		}
+		return true;
 	}
 
-	private boolean validateResolutions() {
-        if (image.getHeight() == 0 || image.getWidth() == 0) {
-            System.out.println("Image dimensions are 0");
-            return false;
-        }
-        if (image.getHeight() > 1080 || image.getWidth() > 1920) {
-            System.out.println("Image dimensions are too large");
-            return false;
-        }
-        return true;
-	}
-	
 	private boolean validateImage() {
 		if (image == null) {
 			System.out.println("Image not loaded");
@@ -66,7 +58,7 @@ public class ImageToASCII {
 		}
 		return true;
 	}
-	
+
 	private boolean validateOutputPath() {
 		if (outputPath == null) {
 			System.out.println("Output path not set");
@@ -95,30 +87,52 @@ public class ImageToASCII {
 		}
 	}
 	
+	private char pixelToASCII(int pixel) {
+		final char[] asciiChars = { '@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.' };
+		Color color = new Color(pixel, true);
+		int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
+		int index = (gray * (asciiChars.length - 1)) / 255;
+		return asciiChars[index];
+	}
+	
+	private String pixelToColoredASCII(int pixel) {
+	    final char[] asciiChars = { '@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.' };
+	    Color color = new Color(pixel, true);
+	    int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
+	    int index = (gray * (asciiChars.length - 1)) / 255;
+	    char asciiChar = asciiChars[index];
+
+	    // ANSI color code
+	    String ansiColor = String.format("\u001B[38;2;%d;%d;%dm", color.getRed(), color.getGreen(), color.getBlue());
+	    return ansiColor + asciiChar + "\u001B[0m"; // Reset color after character
+	}
+
 	public void convertToASCIIInWindow() {
-	    if (!validateImage() || !validateResolutions()) {
-	        return;
-	    }
-	    StringBuilder asciiArt = new StringBuilder();
-	    for (int y = 0; y < height; y++) {
-	        for (int x = 0; x < width; x++) {
-	            int pixel = image.getRGB(x, y);
-	            char ascii = pixelToASCII(pixel);
-	            asciiArt.append(ascii);
-	        }
-	        asciiArt.append("\n");
-	    }
+		if (!validateImage() || !validateResolutions()) {
+			return;
+		}
+		StringBuilder asciiArt = new StringBuilder();
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				int pixel = image.getRGB(x, y);
+				char ascii = pixelToASCII(pixel);
+				asciiArt.append(ascii);
+			}
+			asciiArt.append("\n");
+		}
 
-	    // Display ASCII art in a JTextArea with a specific font
-	    JTextArea textArea = new JTextArea(asciiArt.toString());
-	    textArea.setFont(new Font("Monospaced", Font.PLAIN, 2));
-	    textArea.setEditable(false);
+		// Display ASCII art in a JTextArea with a specific font
+		JTextArea textArea = new JTextArea(asciiArt.toString());
+		textArea.setFont(new Font("COURIER", Font.PLAIN, 2));
+		textArea.setEditable(false);
+		textArea.setBackground(Color.BLACK);
+		textArea.setForeground(Color.WHITE);
 
-	    JScrollPane scrollPane = new JScrollPane(textArea);
-	    JFrame frame = new JFrame("ASCII Art");
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.getContentPane().add(scrollPane);
-	    frame.setSize(800, 600);
-	    frame.setVisible(true);
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		JFrame frame = new JFrame("ASCII Art");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(scrollPane);
+		frame.setSize(800, 600);
+		frame.setVisible(true);
 	}
 }
