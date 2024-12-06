@@ -1,4 +1,7 @@
 
+import java.io.File;
+
+import org.junit.After;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +18,14 @@ public class TestSuite {
     @Before
     public void setUp() {
         img = null;
+    }
+
+    @After
+    public void tearDown() {
+        File outputFile = img.getOutputPath();
+        if (outputFile != null) {
+            outputFile.delete();
+        }
     }
 
     @Test
