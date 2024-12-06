@@ -22,6 +22,11 @@ public class ImageToASCII {
     private String imagePath = "";
     private File outputPath = null;
 
+    /**
+     * Constructs an ImageToASCII object with the specified image path.
+     *
+     * @param pathToImage the path to the image file
+     */
     public ImageToASCII(String pathToImage) {
         image = null;
         this.imagePath = pathToImage;
@@ -33,6 +38,11 @@ public class ImageToASCII {
         }
     }
 
+    /**
+     * Loads the image from the specified path.
+     *
+     * @throws IOException if an error occurs during reading
+     */
     private void loadImage() throws IOException {
         File inputImage = new File(imagePath);
         this.image = ImageIO.read(inputImage);
@@ -40,6 +50,11 @@ public class ImageToASCII {
         this.width = image.getWidth();
     }
 
+    /**
+     * Validates the resolutions of the loaded image.
+     *
+     * @return true if the resolutions are valid, false otherwise
+     */
     private boolean validateResolutions() {
         if (image.getHeight() == 0 || image.getWidth() == 0) {
             System.out.println("Image dimensions are 0");
@@ -52,6 +67,11 @@ public class ImageToASCII {
         return true;
     }
 
+    /**
+     * Validates if the image is loaded.
+     *
+     * @return true if the image is loaded, false otherwise
+     */
     private boolean validateImage() {
         if (image == null) {
             System.out.println("Image not loaded");
@@ -60,6 +80,11 @@ public class ImageToASCII {
         return true;
     }
 
+    /**
+     * Validates if the output path is set.
+     *
+     * @return true if the output path is set, false otherwise
+     */
     private boolean validateOutputPath() {
         if (outputPath == null) {
             System.out.println("Output path not set");
@@ -68,6 +93,12 @@ public class ImageToASCII {
         return true;
     }
 
+    /**
+     * Converts a pixel to its corresponding ASCII character.
+     *
+     * @param pixel the pixel value
+     * @return the corresponding ASCII character
+     */
     private char pixelToASCII(int pixel) {
         final char[] asciiChars = {'@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.'};
         Color color = new Color(pixel, true);
@@ -76,7 +107,12 @@ public class ImageToASCII {
         return asciiChars[index];
     }
 
-    //unused method
+    /**
+     * Converts a pixel to its corresponding colored ASCII character.
+     *
+     * @param pixel the pixel value
+     * @return the corresponding colored ASCII character
+     */
     private String pixelToColoredASCII(int pixel) {
         final char[] asciiChars = {'@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.'};
         Color color = new Color(pixel, true);
@@ -89,6 +125,11 @@ public class ImageToASCII {
         return ansiColor + asciiChar + "\u001B[0m"; // Reset color after character
     }
 
+    /**
+     * Converts the image to ASCII art and writes it to a file.
+     *
+     * @param nameOfOutputFile the name of the output file
+     */
     public void convertToASCIIInFile(String nameOfOutputFile) {
         outputPath = new File(nameOfOutputFile);
         if (!validateImage() || !validateOutputPath() || !validateResolutions()) {
@@ -109,6 +150,9 @@ public class ImageToASCII {
         }
     }
 
+    /**
+     * Converts the image to ASCII art and displays it in a window.
+     */
     public void convertToASCIIInWindow() {
         if (!validateImage() || !validateResolutions()) {
             return;
@@ -138,22 +182,47 @@ public class ImageToASCII {
         frame.setVisible(true);
     }
 
+    /**
+     * Gets the output file path.
+     *
+     * @return the output file path
+     */
     public File getOutputPath() {
         return outputPath;
     }
 
+    /**
+     * Gets the width of the image.
+     *
+     * @return the width of the image
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Gets the height of the image.
+     *
+     * @return the height of the image
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Gets the loaded image.
+     *
+     * @return the loaded image
+     */
     public BufferedImage getImage() {
         return image;
     }
 
+    /**
+     * Gets the path of the image.
+     *
+     * @return the path of the image
+     */
     public String getImagePath() {
         return imagePath;
     }
