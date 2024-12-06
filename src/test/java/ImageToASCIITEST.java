@@ -15,9 +15,6 @@ public class ImageToASCIITEST {
 	private String imagePathToVaevLogo = "/Users/cadenfinley/Documents/GitHub/imageasciitool/vaevlogo.jpg";
 	private String imagePathToCadenFinley = "/Users/cadenfinley/Documents/GitHub/imageasciitool/cadenfinley.jpg";
 
-	private String outputFilePathVaevLogo = "vaevlogo.txt";
-	private String outputFilePathCadenFinley = "cadenfinley.txt";
-
 	@Before
 	public void setUp() {
 		img = null;
@@ -25,16 +22,14 @@ public class ImageToASCIITEST {
 
 	@Test
 	public void Test_Load_Image_Vaevlogo() {
-		img = new ImageToASCII(imagePathToVaevLogo, outputFilePathVaevLogo);
+		img = new ImageToASCII(imagePathToVaevLogo);
 		assertTrue(img != null);
-		img.convertToASCIIInWindow();
 	}
 
 	@Test
 	public void Test_Load_Image_CadenFinley() {
-		img = new ImageToASCII(imagePathToCadenFinley, outputFilePathCadenFinley);
+		img = new ImageToASCII(imagePathToCadenFinley);
 		assertTrue(img != null);
-		img.convertToASCIIInWindow();
-	}3
+	}
 
 }
