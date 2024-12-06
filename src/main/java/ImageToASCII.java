@@ -15,11 +15,11 @@ import javax.swing.JTextArea;
  */
 public class ImageToASCII {
 
-	private BufferedImage image;
-	private int width;
-	private int height;
-	private String imagePath;
-	private File outputPath;
+	private BufferedImage image = null;
+	private int width = 0;
+	private int height = 0;
+	private String imagePath = "";
+	private File outputPath = null;
 
 	public ImageToASCII(String pathToImage) {
 		image = null;
@@ -66,6 +66,27 @@ public class ImageToASCII {
 		}
 		return true;
 	}
+	
+	private char pixelToASCII(int pixel) {
+		final char[] asciiChars = { '@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.' };
+		Color color = new Color(pixel, true);
+		int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
+		int index = (gray * (asciiChars.length - 1)) / 255;
+		return asciiChars[index];
+	}
+	
+	//unused method
+	private String pixelToColoredASCII(int pixel) {
+	    final char[] asciiChars = { '@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.' };
+	    Color color = new Color(pixel, true);
+	    int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
+	    int index = (gray * (asciiChars.length - 1)) / 255;
+	    char asciiChar = asciiChars[index];
+
+	    // ANSI color code
+	    String ansiColor = String.format("\u001B[38;2;%d;%d;%dm", color.getRed(), color.getGreen(), color.getBlue());
+	    return ansiColor + asciiChar + "\u001B[0m"; // Reset color after character
+	}
 
 	public void convertToASCIIInFile(String nameOfOutputFile) {
 		outputPath = new File(nameOfOutputFile);
@@ -85,26 +106,6 @@ public class ImageToASCII {
 			System.out.println("Error writing to file");
 			System.out.println("Error: " + e);
 		}
-	}
-	
-	private char pixelToASCII(int pixel) {
-		final char[] asciiChars = { '@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.' };
-		Color color = new Color(pixel, true);
-		int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
-		int index = (gray * (asciiChars.length - 1)) / 255;
-		return asciiChars[index];
-	}
-	
-	private String pixelToColoredASCII(int pixel) {
-	    final char[] asciiChars = { '@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.' };
-	    Color color = new Color(pixel, true);
-	    int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
-	    int index = (gray * (asciiChars.length - 1)) / 255;
-	    char asciiChar = asciiChars[index];
-
-	    // ANSI color code
-	    String ansiColor = String.format("\u001B[38;2;%d;%d;%dm", color.getRed(), color.getGreen(), color.getBlue());
-	    return ansiColor + asciiChar + "\u001B[0m"; // Reset color after character
 	}
 
 	public void convertToASCIIInWindow() {
@@ -134,5 +135,25 @@ public class ImageToASCII {
 		frame.getContentPane().add(scrollPane);
 		frame.setSize(800, 600);
 		frame.setVisible(true);
+	}
+	
+	public File getOutputPath() {
+		return outputPath;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public BufferedImage getImage() {
+		return image;
+	}
+	
+	public String getImagePath() {
+		return imagePath;
 	}
 }

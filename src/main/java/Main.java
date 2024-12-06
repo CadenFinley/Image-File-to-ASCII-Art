@@ -1,27 +1,44 @@
 
+/**
+ * @author Caden Finley
+ */
 public class Main {
-
-	private static ImageToASCII img;
-
-	private static String imagePathToVaevLogo = "/Users/cadenfinley/Documents/GitHub/imageasciitool/vaevlogo.jpg";
-	private static String imagePathToCadenFinley = "/Users/cadenfinley/Documents/GitHub/imageasciitool/cadenfinley.jpg";
-
-	private static String outputFilePathVaevLogo = "vaevlogo.txt";
-	private static String outputFilePathCadenFinley = "cadenfinley.txt";
+	
+	//Demo of the ImageToASCII class
+	
+	private static ImageToASCII imageToAscii;
 
 	public static void main(String[] args) {
-		img = new ImageToASCII(imagePathToVaevLogo);
-		img.convertToASCIIInFile(outputFilePathVaevLogo);
-
-		img = new ImageToASCII(imagePathToCadenFinley);
-		img.convertToASCIIInFile(outputFilePathCadenFinley);
-
-		img = new ImageToASCII(imagePathToVaevLogo);
-		img.convertToASCIIInWindow();
-
-		img = new ImageToASCII(imagePathToCadenFinley);
-		img.convertToASCIIInWindow();
-
+		System.out.println("Input the File path to image: ");
+		String path = System.console().readLine();
+		System.out.println("Out to window or file or both? (w/f/b): ");
+		String out = System.console().readLine();
+		if(out.equals("w")) {
+            imageToAscii = new ImageToASCII(path);
+            imageToAscii.convertToASCIIInWindow();
+            displayInfo();
+		} else if (out.equals("f")) {
+			System.out.println("Input the File name to create output (.txt): ");
+			String outputPath = System.console().readLine();
+			imageToAscii = new ImageToASCII(path);
+			imageToAscii.convertToASCIIInFile(outputPath);
+			displayInfo();
+		} else if (out.equals("b")) {
+			System.out.println("Input the File name to create output (.txt): ");
+			String outputPath = System.console().readLine();
+			imageToAscii = new ImageToASCII(path);
+			imageToAscii.convertToASCIIInWindow();
+			imageToAscii.convertToASCIIInFile(outputPath);
+			displayInfo();
+		} else {
+			System.out.println("Invalid input");
+		}
+	}
+	
+	private static void displayInfo() {
+		System.out.println("Image dimensions: " + imageToAscii.getHeight() + "x" + imageToAscii.getWidth());
+		System.out.println("Output path: " + imageToAscii.getOutputPath());
+		System.out.println("Output path exists: " + imageToAscii.getOutputPath().exists());
 	}
 
 }
