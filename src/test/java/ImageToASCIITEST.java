@@ -33,6 +33,4 @@ public class ImageToASCIITEST {
 	public void Test_Get_Height() {
 		img = new ImageToASCII("path", 100, 100);
 	}
-	
-	
 }
