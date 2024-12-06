@@ -4,9 +4,11 @@
  */
 public class Main {
 
-    //Demo of the ImageToASCII class
     private static ImageToASCII imageToAscii;
 
+    /**
+     * Demo of the ImageToASCII class
+     */
     public static void main(String[] args) {
         System.out.println("Input the File path to image: ");
         String path = System.console().readLine();
