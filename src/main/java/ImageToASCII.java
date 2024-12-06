@@ -120,6 +120,8 @@ public class ImageToASCII {
     }
 
     /**
+     * Unused method
+     * 
      * Converts a pixel to its corresponding colored ASCII character.
      *
      * @param pixel the pixel value
