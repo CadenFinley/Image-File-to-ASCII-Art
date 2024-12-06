@@ -12,6 +12,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
+ * The ImageToASCII class provides functionality to convert an image to ASCII
+ * art. It supports loading an image from a specified path, validating the image
+ * and its resolutions, converting the image to ASCII art, and displaying the
+ * ASCII art in a window or writing it to a file.
+ *
+ * Usage example: 
+ * ImageToASCII converter = new ImageToASCII("path/to/image.jpg");
+ * converter.convertToASCIIInFile("output.txt");
+ * converter.convertToASCIIInWindow();
+ *
+ * Note: The image dimensions should not exceed 1920x1080.
+ *
  * @author Caden Finley
  */
 public class ImageToASCII {
