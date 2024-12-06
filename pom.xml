@@ -21,6 +21,22 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>io.sourceforge.github.components</groupId>
+            <artifactId>javax</artifactId>
+            <version>1.2.2</version>
+            <type>pom</type>
+        </dependency>
+
+
+        <dependency>
+            <groupId>hu.blackbelt.judo.eclipse.jdk.zulu</groupId>
+            <artifactId>jdk-bundles</artifactId>
+            <version>11.0.8</version>
+            <type>pom</type>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
